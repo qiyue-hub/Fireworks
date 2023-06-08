@@ -28,6 +28,7 @@ int numFirework = 0; // number of existing firework
 bool explosion[maxFirework], explosion2[maxFirework], noexplosion2[maxFirework];
 int numParticle[maxFirework];
 float posFirework[maxFirework], rgb[3][maxFirework], posFire[maxFirework]; // number of visible points of each firework, position of exposion
+static GLdouble eyex=0.0, eyey=0.0, eyez=5.0, centerx=0.0, centery=0.0, centerz=0.0, upx=0.0, upy=1.0, upz=0.0; //lookat参数
 
 clock_t srt, ed;
 
@@ -456,7 +457,7 @@ void display() {
     // Set up modelview matrix
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    gluLookAt(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 
     // Adjust the overall ambient light
     glEnable(GL_COLOR_MATERIAL);
@@ -585,6 +586,55 @@ void display() {
     glutSwapBuffers();
 }
 
+//键盘控制视角转换
+
+GLuint window;
+GLuint View1;
+
+void NormalKeys(unsigned char key, int x, int y) {
+    switch (key) {
+        case 'w'://W前进
+            eyez -= 1.0;
+            glutPostRedisplay();
+            break;
+        case 's'://S后退
+            eyez += 1.0;
+            glutPostRedisplay();
+            break;
+        case 'a'://A左行
+            eyex -= 1.0;
+            glutPostRedisplay();
+            break;
+        case 'd'://D右行
+            eyex += 1.0;
+            glutPostRedisplay();
+            break;
+        case 'i'://I抬头
+            upy = 0.5;
+            upz -= 2.0;
+            eyey += 0.01;
+            glutPostRedisplay();
+            break;
+        case 'k'://K低头
+            upy = 0.5;
+            upz += 2.0;
+            eyey -= 0.01;
+            glutPostRedisplay();
+            break;
+        case 'j'://J左转头
+            centerx -= 1.0;
+            glutPostRedisplay();
+            break;
+        case 'l'://L右转头
+            centerx += 1.0;
+            glutPostRedisplay();
+            break;
+        case 27:
+            exit(0);
+            break;
+    }
+}
+
 //void initLight(void)
 //{
 //    //// Light properties
@@ -646,6 +696,7 @@ int main(int argc, char** argv) {
 
     //initLight();
 
+    glutKeyboardFunc(NormalKeys);
     glutDisplayFunc(display);
     glutIdleFunc(update);
     glutMainLoop();
