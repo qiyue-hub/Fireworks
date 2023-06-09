@@ -797,22 +797,26 @@ void NormalKeys(unsigned char key, int x, int y) {
         break;
     case 'a'://A左行
         eyex -= 0.2f;
+        centerx -= 0.2f;
         glutPostRedisplay();
         break;
     case 'd'://D右行
         eyex += 0.2f;
+        centerx += 0.2f;
         glutPostRedisplay();
         break;
     case 'i'://I抬头
         upy = 0.1f;
         upz -= 0.4f;
         eyey += 0.002f;
+        centery += 0.5f;
         glutPostRedisplay();
         break;
     case 'k'://K低头
         upy = 0.1f;
         upz += 0.4f;
         eyey -= 0.02f;
+        centery -= 0.5f;
         glutPostRedisplay();
         break;
     case 'j'://J左转头
@@ -832,8 +836,22 @@ void NormalKeys(unsigned char key, int x, int y) {
         puppySpeedZ = -puppySpeedZ;
         glutPostRedisplay();
         break;
-    case 27:
+    case 27://esc退出
         exit(0);
+        break;
+    case 32://空格复原
+        eyex = 0.0;
+        eyey = 0.0;
+        eyez = 5.0;
+        centerx = 0.0;
+        centery = 0.0;
+        centerz = 0.0;
+        upx = 0.0; 
+        upy = 1.0;
+        upz = 0.0;
+        puppySpeedX = 0.0003f;
+        puppySpeedZ = 0.0002f;
+        glutPostRedisplay();
         break;
     }
 }
