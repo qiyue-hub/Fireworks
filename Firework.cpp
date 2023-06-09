@@ -815,7 +815,7 @@ void NormalKeys(unsigned char key, int x, int y) {
     case 'k'://K低头
         upy = 0.1f;
         upz += 0.4f;
-        eyey -= 0.02f;
+        eyey -= 0.002f;
         centery -= 0.5f;
         glutPostRedisplay();
         break;
